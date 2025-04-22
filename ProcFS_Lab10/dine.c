@@ -16,7 +16,7 @@
 #define NUM_CHOPS NUM_PHILS
 #define FIELDS_TO_IGNORE 13
 
-#define DEADLOCK 0
+#define DEADLOCK 1
 #define ACTIVE_DURATION 200
 
 typedef struct {
@@ -220,19 +220,22 @@ int check_for_deadlock()
   unsigned long new_sys_time;
   unsigned long new_user_time;
 
-  deadlock = 0;
+  deadlock = 1;
   for (i = 0; i < NUM_PHILS; i++) {
 
     /*
      * 1. Store the stat filename for this diner into a buffer. Use the sprintf
      * library call.
      */
+     sprintf() //Bring our file in the buffer. /proc/pid(self)/task/<TID>/stat/
     
 
     /* 
      * 2. Use fopen to open the stat file as a file stream. Open it
      * with read only permissions.
      */
+
+     fopen(, "r")//this opens our file
 
 
 
@@ -243,8 +246,16 @@ int check_for_deadlock()
      * also need to determine how many fields to skip over - see proc(5)
      * HINT: Use the the * qualifier to skip tokens without storing them.
      */
-
-
+     fscanf()
+     fscanf(stat)
+          fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
+     fscanf(stat)
 
 
 
@@ -253,17 +264,19 @@ int check_for_deadlock()
     /* 
      * 4. Read the time values you want. Use fscanf again. 
      */ 
-
-
+     //user sys time - stored long unsigned
 
 
    
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
-   
- 
+     //usertime current - usertime prev
+     //systime current - systime prev
+     //if(same && same)
+     {
 
+     } 
 
 
 
@@ -272,6 +285,7 @@ int check_for_deadlock()
     /*
      * 6. Close the stat file stream 
      */
+
 
   }
   
