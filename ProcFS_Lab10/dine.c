@@ -227,16 +227,16 @@ int check_for_deadlock()
      * 1. Store the stat filename for this diner into a buffer. Use the sprintf
      * library call.
      */
-     sprintf() //Bring our file in the buffer. /proc/pid(self)/task/<TID>/stat/
-    
+  /*   sprintf() //Bring our file in the buffer. /proc/pid(self)/task/<TID>/stat/
+    */
 
     /* 
      * 2. Use fopen to open the stat file as a file stream. Open it
      * with read only permissions.
      */
-
+/*
      fopen(, "r")//this opens our file
-
+*/
 
 
 
@@ -246,6 +246,7 @@ int check_for_deadlock()
      * also need to determine how many fields to skip over - see proc(5)
      * HINT: Use the the * qualifier to skip tokens without storing them.
      */
+     /*
      fscanf()
      fscanf(stat)
           fscanf(stat)
@@ -256,7 +257,7 @@ int check_for_deadlock()
      fscanf(stat)
      fscanf(stat)
      fscanf(stat)
-
+*/
 
 
 
