@@ -220,7 +220,7 @@ int check_for_deadlock()
   unsigned long new_sys_time;
   unsigned long new_user_time;
 
-  deadlock = 1;
+  deadlock = 0;
   for (i = 0; i < NUM_PHILS; i++) {
 
     /*
