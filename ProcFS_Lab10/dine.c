@@ -220,23 +220,23 @@ int check_for_deadlock()
   unsigned long new_sys_time;
   unsigned long new_user_time;
 
-  deadlock = 0;
+  deadlock = 1;
   for (i = 0; i < NUM_PHILS; i++) {
 
     /*
      * 1. Store the stat filename for this diner into a buffer. Use the sprintf
      * library call.
      */
-  /*   sprintf() //Bring our file in the buffer. /proc/pid(self)/task/<TID>/stat/
-    */
+    sprintf(filename, "/proc/self/task/%d/stat", diners[i].tid);
+
 
     /* 
      * 2. Use fopen to open the stat file as a file stream. Open it
      * with read only permissions.
      */
-/*
-     fopen(, "r")//this opens our file
-*/
+    statf = fopen(filename, "r");
+
+
 
 
 
@@ -246,52 +246,55 @@ int check_for_deadlock()
      * also need to determine how many fields to skip over - see proc(5)
      * HINT: Use the the * qualifier to skip tokens without storing them.
      */
-     /*
-     fscanf()
-     fscanf(stat)
-          fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-     fscanf(stat)
-*/
+     // Skip the first 13 fields of /proc/[pid]/stat
+      fscanf(statf,
+       "%*d "     // (1) pid
+       "%*s "     // (2) comm
+       "%*c "     // (3) state
+       "%*d "     // (4) ppid
+       "%*d "     // (5) pgrp
+       "%*d "     // (6) session
+       "%*d "     // (7) tty_nr
+       "%*d "     // (8) tpgid
+       "%*u "     // (9) flags
+       "%*u "     // (10) minflt
+       "%*u "     // (11) cminflt
+       "%*u "     // (12) majflt
+       "%*u ");   // (13) cmajflt
 
-
-
-    
     /* 
      * 4. Read the time values you want. Use fscanf again. 
      */ 
-     //user sys time - stored long unsigned
+    fscanf(statf, "%lu %lu", &new_user_time, &new_sys_time);
+
+
+
 
 
    
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
-     //usertime current - usertime prev
-     //systime current - systime prev
-     //if(same && same)
+     user_progress[i] = new_user_time - user_time[i];
+     sys_progress[i] = new_sys_time - sys_time[i];
+     user_time[i] = new_user_time;
+     sys_time[i] = new_sys_time;
+     if(user_progress[i] == 0 && sys_progress[i] == 0) 
      {
-
-     } 
-
-
-
-
+      stalled_threads++;
+      }
 
     /*
      * 6. Close the stat file stream 
      */
+     fclose(statf);
 
 
   }
   
   return deadlock;
 }
+
 
 
 int main(int argc, char **argv)
