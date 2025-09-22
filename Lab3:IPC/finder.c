@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
   int status;
   pid_t pid_1, pid_2, pid_3, pid_4;
   
-  int p1[2], p2[2], p3[2], p4[2];
+  int p1[2], p2[2], p3[2];
 
   //Checking if input parameters DIR, STR are correct
   if (argc != 4) {
@@ -31,8 +31,11 @@ int main(int argc, char *argv[])
 
   //STEP 1
 	//Initialize pipes p1, p2, and p3
+  pipe(p1);
+
 
   pid_1 = fork();
+
   if (pid_1 == 0) {
     /* First Child */
 
