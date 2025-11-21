@@ -57,32 +57,31 @@ int main (int argc, char *argv[])
   /* 
    * 1. find size of input file 
    */
-  fstat(fdin, &statbuf);
-  long filesize = statbuf.st_size;
-
+	fstat(fdin, &statbuf);
+	long filesize = statbuf.st_size;
 
   /* 
    * 2. go to the location corresponding to the last byte 
    */
-  lseek(fdout, filesize-1, SEEK_SET);
-
+	lseek(fdout, filesize-1, SEEK_SET);
+	
 
   /* 
    * 3. write a dummy byte at the last location 
    */
-  char dummy = 'a';
-  write(fdout, &dummy, 0);
+	char dummy = 'a';
+	write(fdout, &dummy, 0);
+	lseek(fdout, 0, SEEK_SET);
 
   /* 
    * 4. mmap the input file 
    */
-  src = (char *)mmap(NULL, filesize, PROT_READ, MAP_SHARED, fdin, 0);
+	src = (char *) mmap(NULL, filesize, PROT_READ, MAP_SHARED, fdin, 0);
 
   /* 
    * 5. mmap the output file 
    */
-
-  dst = (char *)mmap(NULL, filesize, PROT_WRITE, MAP_SHARED, fdout, 0);
+	dst = (char *) mmap(NULL, filesize, PROT_WRITE, MAP_SHARED, fdout, 0);
 
   /* 
    * 6. copy the input file to the output file 
@@ -91,8 +90,8 @@ int main (int argc, char *argv[])
      * stores what is in the memory location pointed to by src into
      * the memory location pointed to by dest.
      */
-    memcpy(dst, src, filesize);
     //*dst = *src;
+	memcpy(dst, src, filesize);
 } 
 
 
